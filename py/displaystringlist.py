@@ -6,7 +6,7 @@ import json
 #from .constants import get_category, get_name
 
 
-class Soze_Display_Strings_List:
+class Display_Strings_List:
   """Display any data node."""
 
   NAME = "Display Strings List"

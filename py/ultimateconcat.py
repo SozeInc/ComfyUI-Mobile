@@ -6,9 +6,9 @@ import os
 
 
 # Get the absolute path of various directories
-sozenodes_dir = os.path.dirname(os.path.abspath(os.path.join(__file__, '..')))
-custom_nodes_dir = os.path.abspath(os.path.join(sozenodes_dir, '..'))
-comfy_dir = os.path.abspath(os.path.join(sozenodes_dir, '..', '..'))
+mobilenodes_dir = os.path.dirname(os.path.abspath(os.path.join(__file__, '..')))
+custom_nodes_dir = os.path.abspath(os.path.join(mobilenodes_dir, '..'))
+comfy_dir = os.path.abspath(os.path.join(mobilenodes_dir, '..', '..'))
 
 
 
@@ -19,8 +19,8 @@ comfy_dir = os.path.abspath(os.path.join(sozenodes_dir, '..', '..'))
 
 
 ########################################################################################################################
-# Soze_Ultimate_Concat
-class Soze_Ultimate_Concat:
+# Ultimate_Concat
+class Ultimate_Concat:
     @classmethod
     def INPUT_TYPES(cls):
         concat_max = 25
@@ -43,7 +43,7 @@ class Soze_Ultimate_Concat:
     RETURN_NAMES = ("STRING",)
     FUNCTION = "concatenate_all"
     CATEGORY = "Comfy Mobile"
-    
+
     def concatenate_all(self, concat_count, delimiter, **kwargs):
         # Handle special case where delimiter is "\n" (literal newline).
         if delimiter == "\\n":

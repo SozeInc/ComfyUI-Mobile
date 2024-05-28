@@ -11,8 +11,8 @@ comfy_dir = os.path.abspath(os.path.join(mobilenodes_dir, '..', '..'))
 
 
 ########################################################################################################################
-# Soze_Send_Notification
-class Soze_Send_Notification:
+# Send_Notification
+class Send_Notification:
     @classmethod
     def INPUT_TYPES(cls):
         inputs = {
@@ -34,8 +34,8 @@ class Soze_Send_Notification:
     CATEGORY = "Comfy Mobile"
 
     def send_notification(self, message, messagePrefix, messageSuffix):
-        notifier = mobilenodes_dir + "\\notifier\\sozenotifier.exe "
-        print("SOZE: Notifier: " + notifier)
+        notifier = mobilenodes_dir + "\\notifier\\mobilenotifier.exe "
+        print("MOBILE: Notifier: " + notifier)
         process = subprocess.Popen([notifier, messagePrefix + message + messageSuffix], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         stdout, stderr = process.communicate()
         
