@@ -1,6 +1,6 @@
-# Soze Nodes - A collection of ComfyUI notification related custom nodes.
+# ComfyUI Mobile Nodes - A collection of ComfyUI Mobile related custom nodes.
 # by Soze Inc - 2024-05 
-# https://github.com/SozeInc/ComfyUI-SozeNodes
+# https://github.com/SozeInc/ComfyUI-Mobile
 import os
 
 
@@ -42,8 +42,8 @@ class Soze_Ultimate_Concat:
     RETURN_TYPES = ("STRING",)
     RETURN_NAMES = ("STRING",)
     FUNCTION = "concatenate_all"
-    CATEGORY = "Soze Nodes"
-
+    CATEGORY = "Comfy Mobile"
+    
     def concatenate_all(self, concat_count, delimiter, **kwargs):
         # Handle special case where delimiter is "\n" (literal newline).
         if delimiter == "\\n":

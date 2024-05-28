@@ -1,6 +1,6 @@
-# Mobile Nodes - A collection of ComfyUI notification related custom nodes.
+# ComfyUI Mobile Nodes - A collection of ComfyUI Mobile related custom nodes.
 # by Soze Inc - 2024-05 
-# https://github.com/SozeInc/ComfyUI-SozeNodes
+# https://github.com/SozeInc/ComfyUI-Mobile
 import os
 import subprocess
 
@@ -31,7 +31,7 @@ class Soze_Send_Notification:
     RETURN_TYPES = ("STRING", "STRING")
     RETURN_NAMES = ("output", "error")
     FUNCTION = "send_notification"
-    CATEGORY = "Soze Nodes"
+    CATEGORY = "Comfy Mobile"
 
     def send_notification(self, message, messagePrefix, messageSuffix):
         notifier = mobilenodes_dir + "\\notifier\\sozenotifier.exe "

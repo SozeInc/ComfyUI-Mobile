@@ -1,3 +1,7 @@
+# ComfyUI Mobile Nodes - A collection of ComfyUI Mobile related custom nodes.
+# by Soze Inc - 2024-05 
+# https://github.com/SozeInc/ComfyUI-Mobile
+
 import json
 #from .constants import get_category, get_name
 
@@ -5,8 +9,8 @@ import json
 class Soze_Display_Strings_List:
   """Display any data node."""
 
-  NAME = "Soze Display Strings List"
-  CATEGORY = "Soze Nodes"
+  NAME = "Display Strings List"
+  CATEGORY = "Comfy Mobile"
 
   @classmethod
   def INPUT_TYPES(cls):  # pylint: disable = invalid-name, missing-function-docstring

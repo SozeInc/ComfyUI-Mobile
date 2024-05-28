@@ -1,3 +1,7 @@
+# ComfyUI Mobile Nodes - A collection of ComfyUI Mobile related custom nodes.
+# by Soze Inc - 2024-05 
+# https://github.com/SozeInc/ComfyUI-Mobile
+
 class SettingsLauncherData:
     def __init__(self, seed, steps, cfg, width, height, batch_count, sampler_name, scheduler, denoise, 
                  custom_name_1, custom_type_1, custom_value_1, custom_name_2, custom_type_2, custom_value_2, 
