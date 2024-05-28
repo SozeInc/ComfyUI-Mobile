@@ -1,2 +1,1 @@
-# ComfyUI-SozeNodes
- 
+# ComfyUI-Mobile
