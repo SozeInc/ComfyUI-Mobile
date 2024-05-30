@@ -12,18 +12,18 @@ import traceback
 
 from .py.ultimateconcat import Ultimate_Concat
 from .py.sendnotification import Send_Notification
-from .py.settingslauncher import Settings_Launcher, Settings_Launcher_Outputs
+from .py.settingslauncher import Settings_Launcher#, Settings_Launcher_Outputs
 
-NODE_CLASS_MAPPINGS = { "Mobile_Ultimate_Concat": Ultimate_Concat,
-                        "Mobile_Send_Notification": Send_Notification,
-                        "Mobile_Settings_Launcher": Settings_Launcher,
-                        "Mobile_Settings_Launcher_Data": Settings_Launcher_Outputs
+NODE_CLASS_MAPPINGS = { "Ultimate Concat (Mobile)": Ultimate_Concat,
+                        "Send Notification (Mobile)": Send_Notification,
+                        "Settings Launcher (Mobile)": Settings_Launcher,
+                        #"Mobile_Settings_Launcher_Data": Settings_Launcher_Outputs
                         }
 
 NODE_DISPLAY_NAME_MAPPINGS = { "Ultimate_Concat": "Ultimate Concat (Mobile)",
                               "Send_Notification": "Send Notification (Mobile)",
                               "Settings_Launcher": "Settings Launcher (Mobile)",
-                              "Settings_Launcher_Data": "Settings Launcher Outputs (Mobile)"
+                              #"Settings_Launcher_Data": "Settings Launcher Outputs (Mobile)"
                               }
 
 WEB_DIRECTORY = "js"

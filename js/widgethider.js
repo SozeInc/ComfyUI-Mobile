@@ -17,15 +17,17 @@ const doesInputWithNameExist = (node, name) => {
 function widgetLogic(node, widget) {
     // Retrieve the handler for the current node title and widget name
     if (widget.name == "concat_count") {
-        handleSozeUltimateConcatCount(node, widget);
+        handleUltimateConcatCount(node, widget);
     } 
-    //else if (String(widget.name).slice(0,7) == "prefix_") {
-    //    const idx = parseInt(String(widget.name).slice(7));
-    //    handleSozeUltimateConcatInputRename(node, idx);
-    //}
+    
+    // else if (widget.HIDDEN_TAG == "settings_output_custom_string_1" || widget.name == "custom_name_1") {
+    //     const inputWidget = findWidgetByName(node, "settings_input_custom_string_1");
+    //     widget.HIDDEN_TAG = "settings_output_custom_string_1";
+        
+    // }
 }
 
-function handleSozeUltimateConcatInputRename(node, idx) {
+function handleUltimateConcatInputRename(node, idx) {
     try
     {
         const concatCountWidget = findWidgetByName(node, "concat_count");
@@ -35,11 +37,11 @@ function handleSozeUltimateConcatInputRename(node, idx) {
             if (prefixWidget.value != "") valueWidget.name = `${prefixWidget.value}_value_${idx}`;
         }
     } catch (e) {
-        console.error("[SOZE][handleSozeUltimateConcatInputRename]" + e);
+        console.error("[ComfyMobile][handleUltimateConcatInputRename]" + e);
     }
 }
 
-function handleSozeUltimateConcatCount(node, widget) {
+function handleUltimateConcatCount(node, widget) {
     try
     {
         const countValue = widget.value;
@@ -55,7 +57,7 @@ function handleSozeUltimateConcatCount(node, widget) {
             }
         }
     } catch (e) {
-        console.error("[SOZE][handleSozeUltimateConcatCount]" + e);
+        console.error("[ComfyMobile][handleUltimateConcatCount]" + e);
     }
 }
 
@@ -88,12 +90,12 @@ function toggleWidget(node, widget, show = false, suffix = "") {
         const newHeight = node.computeSize()[1];
         node.setSize([node.size[0], newHeight]);
     } catch (e) {
-        console.error("[SOZE][toggleWidget]" + e);
+        console.error("[ComfyMobile][toggleWidget]" + e);
     }
 }
 
 app.registerExtension({
-    name: "sozenodes.widgethider",
+    name: "mobilenodes.widgethider",
     nodeCreated(node) {
         for (const w of node.widgets || []) {
             let widgetValue = w.value;
@@ -125,4 +127,5 @@ app.registerExtension({
         }
         setTimeout(() => {initialized = true;}, 500);
     }
+    
 });

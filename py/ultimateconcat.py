@@ -40,7 +40,7 @@ class Ultimate_Concat:
         return inputs
 
     RETURN_TYPES = ("STRING",)
-    RETURN_NAMES = ("STRING",)
+    RETURN_NAMES = ("Concat String",)
     FUNCTION = "concatenate_all"
     CATEGORY = "Comfy Mobile"
 
