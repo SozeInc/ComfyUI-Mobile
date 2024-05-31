@@ -1,16 +1,15 @@
 import { app } from "../../scripts/app.js";
 import { api } from "../../scripts/api.js";
 
-//import { hud, FlowState } from "./settings_launcher_hud.js";
-//import { send_cancel, send_message, send_onstart, skip_next_restart_message  } from "./settings_launcher_messaging.js";
-
 class FlowState {
     constructor(){}
     static idle() {
         return (!app.runningNodeId);
     }
     static paused() {
-        return (hud.current_node_is_chooser);
+        if (app.runningNodeId)
+            return (app.graph?._nodes_by_id[app.runningNodeId.toString()]?.comfyClass === "Settings Launcher (Mobile)");
+        return false;
     }
     static paused_here(node_id) {
         return (FlowState.paused() && FlowState.here(node_id))
@@ -29,17 +28,19 @@ class FlowState {
     static cancelling = false;
 }
 function send_proceed() {
-    api.fetchApi("/settings_launcher_flow_control_proceed");
+    const body = new FormData();
+    api.fetchApi("/settings_launcher_flow_control_proceed", { method: "POST"});
 }
 function send_cancel() {
-    api.fetchApi("/settings_launcher_flow_control_cancel");
+    const body = new FormData();
+    api.fetchApi("/settings_launcher_flow_control_cancel", { method: "POST"});
 }
 
 
 
 function progressButtonPressed() {
     const node = app.graph._nodes_by_id[this.node_id];
-    console.log("[ComfyMobile][progressButtonPressed] FlowState: " + FlowState.state() + " graph node.id: " + node.id + " this.node.id:" + this.node_id);
+    console.log("[ComfyMobile][progressButtonPressed] FlowState: " + FlowState.state() + " this.name: " + this.name);
     if (this.name!='') {
         if (FlowState.paused()) {
             send_proceed();
@@ -71,22 +72,10 @@ function disable_serialize(widget) {
 app.registerExtension({
     name: "mobilenodes.settings_launcher",
     init() {
-        window.addEventListener("keydown", keyListener, true);
         window.addEventListener("beforeunload", send_cancel, true);
     },
     setup() {
         console.log("[ComfyMobile][setup]")
-        /*
-        Whenever the canvas is redrawn, check if we need to update the HUD
-        */
-        const draw = LGraphCanvas.prototype.draw;
-        LGraphCanvas.prototype.draw = function() {
-            hud.update();
-            // if (hud.update()) {
-            //     app.graph._nodes.forEach((node)=> { if (node.update) { node.update(); } })
-            // }
-            draw.apply(this,arguments);
-        }
         /*
         If a run is interrupted, send a cancel message (unless we're doing the cancelling, to avoid infinite loop)
         */
@@ -96,14 +85,6 @@ app.registerExtension({
             if (FlowState.paused() && !FlowState.cancelling) send_cancel();
             original_api_interrupt.apply(this, arguments);
         }
-
-                /*
-        At the start of execution
-        */
-        function on_execution_start() {
-            send_onstart();
-        } 
-        api.addEventListener("execution_start", on_execution_start);
 
         /*
         Cancel-on-Queue
@@ -126,34 +107,6 @@ app.registerExtension({
                 intercept_queue_triggers();
             }
         })
-
-        /*
-        Additional settings
-        */
-        app.ui.settings.addSetting({
-            id: "SettingsLauncher.hudpos",
-            name: "Settings Launcher HUD position (-1 for off)",
-            type: "slider",
-            attrs: {
-              min: -1,
-              max: 500,
-              step: 1,
-            },
-            defaultValue: 10,
-            onChange: (newVal, oldVal) => { hud.move(newVal); }
-        });
-        // app.ui.settings.addSetting({
-        //     id: "SettingsLauncher.alert",
-        //     name: "Settings Launcher: enable alert",
-        //     type: "boolean",
-        //     defaultValue: true,
-        // });
-        // app.ui.settings.addSetting({
-        //     id: "SettingsLauncher.cancelOnQueue",
-        //     name: "Settings Launcher: cancel when a new prompt is queued",
-        //     type: "boolean",
-        //     defaultValue: false,
-        // });
     },
 
     async nodeCreated(node) {
@@ -193,8 +146,6 @@ app.registerExtension({
 
                         if (FlowState.paused_here(this.id)) {
                             this.send_button_widget.name ="Proceed";
-                        } else if (FlowState.idle()) {
-                            this.send_button_widget.name = "Proceed";
                         } else {
                             this.send_button_widget.name = "";
                         }

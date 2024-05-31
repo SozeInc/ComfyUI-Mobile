@@ -2,14 +2,13 @@
 # by Soze Inc - 2024-05 
 # https://github.com/SozeInc/ComfyUI-Mobile
 import os
-import requests
-import comfy.samplers
+import requests # type: ignore
+import comfy.samplers # type: ignore
 
-from server import PromptServer
-from comfy.model_management import InterruptProcessingException
+from server import PromptServer # type: ignore
+from comfy.model_management import InterruptProcessingException # type: ignore
 
-#from .settingslauncherserver import MessageHolder, Cancelled
-from settingslauncherflowcontrol import FlowControl, Cancelled
+from .settingslauncherflowcontrol import FlowControl, Cancelled
 import random
 
 # Get the absolute path of various directories
@@ -58,7 +57,7 @@ class Settings_Launcher:
         custom_max = 25
         inputs = {
             "required": {
-                "resume": (["Always Proceed", "Wait to Proceed", "Proceed Once"], {"default": "Proceed Once"}),
+                "resume": (["Always Proceed", "Wait to Proceed"], {"default": "Wait to Proceed"}),
             },
             "optional": {
                 "seed": ("INT", {"default": 0, "min": 0, "max": 0xffffffffffffffff}),
@@ -81,27 +80,16 @@ class Settings_Launcher:
 
 
     def settings_launcher(self,resume,seed,steps,cfg,width,height,batch_count,sampler_name,scheduler,denoise):
-        FlowControl.start()
         #Get Settings Here
 
-        # wait for user confirmation
-        try:
-            if (resume == "Wait to Proceed"):
-                print("[ComfyMobile] Wait to proceed")
-                FlowControl.waitToProceed()
-            # is_block_condition = (resume == "Wait to Proceed")
-            # is_blocking_mode = (resume not in ["Always Proceed", "Proceed Once"])
-            # print("[ComfyMobile] Wait For Message ID: " + id)
-            # MessageHolder.waitForMessage(id) if (is_blocking_mode and is_block_condition) else [0]
-        except Cancelled:
-            print("[ComfyMobile] InterruptProcessingException")
-            raise InterruptProcessingException()
 
-        #if (resume == "Proceed Once"): resume = "Wait to Proceed"
-        
+        # wait for user confirmation
+        if (resume == "Wait to Proceed"):
+            if (FlowControl.waitToProceed() == False):
+                raise InterruptProcessingException()
+            
         settings_launcher_outputs = SettingsLauncherData(seed, steps, cfg, width, height, batch_count, sampler_name, scheduler, denoise)
         
-        print("[ComfyMobile] Return Settings")
         return (settings_launcher_outputs.seed,settings_launcher_outputs.steps,settings_launcher_outputs.cfg,settings_launcher_outputs.width,settings_launcher_outputs.height,
                 settings_launcher_outputs.batch_count,settings_launcher_outputs.sampler_name,settings_launcher_outputs.scheduler,settings_launcher_outputs.denoise)
 
