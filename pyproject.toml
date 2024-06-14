@@ -1,0 +1,15 @@
+[project]
+name = "comfyui-mobile"
+description = "Nodes: Ultimate Concat (Mobile), Send Notification (Mobile), Settings Launcher (Mobile), Settings Launcher Outputs (Mobile)"
+version = "1.0.0"
+license = "LICENSE"
+dependencies = ["requests"]
+
+[project.urls]
+Repository = "https://github.com/SozeInc/ComfyUI-Mobile"
+#  Used by Comfy Registry https://comfyregistry.org
+
+[tool.comfy]
+PublisherId = ""
+DisplayName = "ComfyUI-Mobile"
+Icon = ""
